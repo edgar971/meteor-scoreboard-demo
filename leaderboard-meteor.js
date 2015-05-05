@@ -1,6 +1,7 @@
 PlayersList = new Meteor.Collection('Players');
 
 if(Meteor.isClient){
+	Meteor.subscribe("thePlayers");
 	Template.LeaderBoardList.player = function(){
 		//sort -1 means descending order. 1 means ascending 
 		return PlayersList.find({}, {sort: {score: -1, name: 1}});
@@ -55,4 +56,10 @@ if(Meteor.isClient){
 			}
 		}
 	})
+}
+
+if(Meteor.isServer) {
+	Meteor.publish('thePlayers', function() {
+		return PlayersList.find();
+	});
 }

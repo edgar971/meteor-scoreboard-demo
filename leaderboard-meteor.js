@@ -44,14 +44,14 @@ if(Meteor.isClient){
 		}
 	};
 	Template.AddPlayerFormTemplate.events({
-		"submit #addPlayerForm" : function(event, template) {
+		"submit #addPlayerForm" : function(event) {
 			event.preventDefault();
-			var newPlayerName = template.find("#NewPlayerName").value;
+			var newPlayerName = event.target.NewPlayerName.value;
 			
 			if(newPlayerName != null) {
 				Meteor.call("AddPlayerData", newPlayerName);
 				newPlayerName = null;
-				template.find("#NewPlayerName").value = null;
+				event.target.NewPlayerName.value = null;
 			}
 		}
 	})

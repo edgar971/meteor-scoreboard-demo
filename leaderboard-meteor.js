@@ -1,20 +1,29 @@
 PlayersList = new Meteor.Collection('Players');
 
 if(Meteor.isClient){
+	//access data by subscribing to the publish function defined inside inServer
 	Meteor.subscribe("thePlayers");
-	Template.LeaderBoardList.player = function(){
-		//sort -1 means descending order. 1 means ascending 
-		return PlayersList.find({}, {sort: {score: -1, name: 1}});
-	};
-	Template.LeaderBoardList.selectedClass = function(){
-		var playerID = this._id,
-			selectedPlayer = Session.get('selectedPlayer');
-		
-		if(playerID == selectedPlayer) {
-			return "blue-grey lighten-5";
+	
+	//define help functions used within the templates
+	Template.LeaderBoardList.helpers({
+		"player" : function() {
+			//sort -1 means descending order. 1 means ascending 
+			return PlayersList.find({}, {sort: {score: -1, name: 1}});
+		},
+		"selectedClass" : function() {
+			var playerID = this._id,
+				selectedPlayer = Session.get('selectedPlayer');
+				
+			if(playerID == selectedPlayer) {
+				return "blue-grey lighten-5";
+			}
+				
 		}
 		
-	};
+				
+	});
+		
+	//define events used within the template
 	Template.LeaderBoardList.events({
 		"click li" : function() {
 			//get id from user on database
@@ -37,12 +46,16 @@ if(Meteor.isClient){
 			Meteor.call("removePlayer", selectedPlayer);
 		}
 	});
-	Template.ActionButtons.IsPlayerSelected = function() {
-		var selectedPlayer = Session.get('selectedPlayer');
-		if(selectedPlayer == null) {
-			return "disabled";
+
+	Template.ActionButtons.helpers({
+		"IsPlayerSelected" : function() {
+			var selectedPlayer = Session.get('selectedPlayer');
+			if(selectedPlayer == null) {
+				return "disabled";
+			}
 		}
-	};
+	});
+
 	Template.AddPlayerFormTemplate.events({
 		"submit #addPlayerForm" : function(event) {
 			event.preventDefault();
@@ -54,7 +67,7 @@ if(Meteor.isClient){
 				event.target.NewPlayerName.value = null;
 			}
 		}
-	})
+	});
 }
 
 if(Meteor.isServer) {

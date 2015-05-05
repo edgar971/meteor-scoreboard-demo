@@ -6,4 +6,6 @@
 nav {
 	margin-bottom: 2em;
 }
-
+.fixed-action-btn ul {
+	margin: 0;
+}

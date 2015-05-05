@@ -26,14 +26,20 @@ if(Meteor.isClient){
 		"click #increase-score" : function() {
 			var selectedPlayer = Session.get('selectedPlayer');
 			PlayersList.update({ _id: selectedPlayer }, {$inc: {score : 1}});
+		},
+		"click #decrease-score" : function () {
+			var selectedPlayer = Session.get('selectedPlayer');
+			PlayersList.update({ _id: selectedPlayer }, {$inc: {score : -1}});
+		},
+		"click #remove-player" : function () {
+			var selectedPlayer = Session.get('selectedPlayer');
+			PlayersList.remove(selectedPlayer);
 		}
 	});
 	Template.ActionButtons.IsPlayerSelected = function() {
 		var selectedPlayer = Session.get('selectedPlayer');
 		if(selectedPlayer == null) {
 			return "disabled";
-		} else {
-			return "deep-orange darken-1";
 		}
 	};
 	Template.AddPlayerFormTemplate.events({

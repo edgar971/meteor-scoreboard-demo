@@ -1,7 +1,8 @@
 <head>	
 	<title>LeaderBoard</title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimal-ui">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 </head>
 <body>
 	{{>LeaderboardHeader}}
@@ -9,11 +10,9 @@
 	{{>LeaderBoardList}}
 	</main>
 	{{>ActionButtons}}
-	<!-- Compiled and minified CSS -->
 	
-	<!-- Compiled and minified JavaScript -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+
+
 </body>
 
 <template name="LeaderboardHeader">	
@@ -42,7 +41,18 @@
 </template>
 <template name="ActionButtons">
 
- 	  <button class="btn-floating btn-large waves-effect waves-light  {{IsPlayerSelected}}"  id="increase-score"><i class="mdi-social-plus-one"></i></button>
+		<div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
+          <a class="btn-floating btn-large red">
+            <i class="large mdi-navigation-more-vert"></i>
+          </a>
+          <ul>
+            <li><a class="btn-floating green" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px); opacity: 0;"><i class="large mdi-editor-publish"></i></a></li>
+            <li><a class="btn-floating red lighten-1 {{IsPlayerSelected}}" id="remove-player"  style="transform: scaleY(0.4) scaleX(0.4) translateY(40px); opacity: 0;"><i class="large mdi-action-highlight-remove"></i></a></li>
+        	<li><a class="btn-floating green darken-1 {{IsPlayerSelected}}" id="increase-score" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px); opacity: 0;"><i class="large mdi-image-exposure-plus-1"></i></a></li>
+			<li><a class="btn-floating red {{IsPlayerSelected}}" id="decrease-score" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px); opacity: 0;"><i class="large mdi-image-exposure-minus-1"></i></a></li>
+		  </ul>
+        </div>
+
 
 </template>
 <template name="AddPlayerFormTemplate">

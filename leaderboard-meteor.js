@@ -26,15 +26,15 @@ if(Meteor.isClient){
 	Template.ActionButtons.events({
 		"click #increase-score" : function() {
 			var selectedPlayer = Session.get('selectedPlayer');
-			PlayersList.update({ _id: selectedPlayer }, {$inc: {score : 1}});
+ 			Meteor.call("modifyPlayerScore", selectedPlayer, 1);
 		},
 		"click #decrease-score" : function () {
 			var selectedPlayer = Session.get('selectedPlayer');
-			PlayersList.update({ _id: selectedPlayer }, {$inc: {score : -1}});
+ 			Meteor.call("modifyPlayerScore", selectedPlayer, -1);
 		},
 		"click #remove-player" : function () {
 			var selectedPlayer = Session.get('selectedPlayer');
-			PlayersList.remove(selectedPlayer);
+			Meteor.call("removePlayer", selectedPlayer);
 		}
 	});
 	Template.ActionButtons.IsPlayerSelected = function() {
@@ -47,11 +47,10 @@ if(Meteor.isClient){
 		"submit #addPlayerForm" : function(event, template) {
 			event.preventDefault();
 			var newPlayerName = template.find("#NewPlayerName").value;
+			
 			if(newPlayerName != null) {
-				PlayersList.insert({
-					name: newPlayerName,
-					score: 0
-				});
+				Meteor.call("AddPlayerData", newPlayerName);
+				newPlayerName = null;
 				template.find("#NewPlayerName").value = null;
 			}
 		}
@@ -59,7 +58,24 @@ if(Meteor.isClient){
 }
 
 if(Meteor.isServer) {
+	//data
 	Meteor.publish('thePlayers', function() {
 		return PlayersList.find();
+	});
+	
+	//methods
+	Meteor.methods({
+		"AddPlayerData" : function (newPlayerName) {
+			PlayersList.insert({
+				name: newPlayerName,
+				score: 0
+			});
+		},
+		"removePlayer" : function (playerId) {
+			PlayersList.remove(playerId);
+		},
+		"modifyPlayerScore" : function (playerId, value) {
+			PlayersList.update({ _id: playerId }, {$inc: {score : value}});
+		}
 	});
 }

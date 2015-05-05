@@ -1,0 +1,63 @@
+<head>	
+	<title>LeaderBoard</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimal-ui">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+</head>
+<body>
+	{{>LeaderboardHeader}}
+	<main class="container">	
+	{{>LeaderBoardList}}
+	</main>
+	{{>ActionButtons}}
+	<!-- Compiled and minified CSS -->
+	
+	<!-- Compiled and minified JavaScript -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+</body>
+
+<template name="LeaderboardHeader">	
+	<nav class="light-blue lighten-1">	
+	    <div class="nav-wrapper">
+		    <a href="#" class="brand-logo center">Scoreboard</a>
+	    </div>
+	</nav>
+</template>
+<template name="LeaderBoardList">	
+	<div class="row">	
+		<ul class="collection col s12">
+			{{#each player}}
+			<li class="collection-item avatar {{selectedClass}}">
+			 	<i class="mdi-social-person deep-purple accent-3 circle"></i>
+			 	<p class="title">{{name}}</p>
+			 	<p>
+				 	Score: {{score}}
+	      		</p>
+	      		<a href="#add+1" id="addPoints" class="secondary-content"><i class="mdi-action-verified-user small"></i></a>
+			</li>
+			{{/each}}
+			{{>AddPlayerFormTemplate}}
+		</ul>
+	</div>
+</template>
+<template name="ActionButtons">
+
+ 	  <button class="btn-floating btn-large waves-effect waves-light  {{IsPlayerSelected}}"  id="increase-score"><i class="mdi-social-plus-one"></i></button>
+
+</template>
+<template name="AddPlayerFormTemplate">
+		<li class="collection-item avatar" >
+			<i class="mdi-social-group-add green circle"></i>
+			<form id="addPlayerForm">
+				<ul>	
+					<li>
+ 						
+ 						<label for="NewPlayerName">Add New Player
+ 							<input type="text" id="NewPlayerName" name="NewPlayerName" required placeholder="Player Name">
+ 						</label>
+					</li>
+					
+				</ul>
+			</form>	
+		</li>
+</template>

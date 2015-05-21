@@ -61,7 +61,6 @@ if(Meteor.isClient){
 		"submit #addPlayerForm" : function(event) {
 			event.preventDefault();
 			var newPlayerName = event.target.NewPlayerName.value;
-			console.log(newPlayerName);
 			if(newPlayerName != null) {
 				Meteor.call("AddPlayerData", newPlayerName);
 				newPlayerName = null;
